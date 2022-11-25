@@ -14,18 +14,7 @@
 export default {
   name: 'LessonCard',
   props: {
-    // lesson: Object,
-  },
-  data() {
-    return {
-      lesson: {
-        id: 1,
-        subject: 'Math',
-        location: 'London',
-        price: '£100',
-        space: 5,
-      },
-    }
+    lesson: Object,
   },
 }
 </script>
