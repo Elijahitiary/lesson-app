@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LessonsList from '../view/LessonsList.vue'
-import ShoppingCart from '../view/ShoppingCart.vue'
+import ShoppingList from '../view/ShoppingList.vue'
 const routes = [
     {
         path: '/',
@@ -9,8 +9,8 @@ const routes = [
     },
     {
         path: '/Shopping',
-        name: 'ShoppingCart',
-        component: ShoppingCart
+        name: 'ShoppingList',
+        component: ShoppingList,
     }
 ]
 

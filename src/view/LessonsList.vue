@@ -1,6 +1,11 @@
 <template>
   <div class="shopping-card-cart">
-    <button :disabled="cart.length == 0">Cart: {{ cart.length }}</button>
+    <button
+      @click="openShopping"
+      :disabled="this.$store.state.cart.length == 0"
+    >
+      Cart: {{ this.$store.state.cart.length }}
+    </button>
   </div>
   <!-- SORT -->
   <div class="sort-container">
@@ -22,12 +27,7 @@
   </div>
 
   <div class="container-lessons">
-    <LessonCard
-      v-for="lesson in lessons"
-      :key="lesson.id"
-      :lesson="lesson"
-      @shoppingCart="updateShopping"
-    />
+    <LessonCard v-for="lesson in lessons" :key="lesson.id" :lesson="lesson" />
   </div>
 </template>
 
@@ -43,14 +43,13 @@ export default {
   data() {
     return {
       sortBy: '',
-      cart: [],
       order: '',
       lessons: lesson(),
     }
   },
   methods: {
-    updateShopping(id) {
-      this.cart.push(id)
+    openShopping() {
+      this.$router.push({ path: '/Shopping' })
     },
   },
   computed: {

@@ -24,14 +24,14 @@ export default {
   },
   data() {
     return {
-      cart: [],
+      space: 5,
     }
   },
   methods: {
     handleAddToCart() {
       if (this.lesson.space > 0) {
         this.lesson.space--
-        this.$emit('shoppingCart', this.lesson.id)
+        this.$store.commit('ADD_TO_CART', this.lesson)
       }
     },
   },
