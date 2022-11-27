@@ -6,11 +6,11 @@
     <hr />
     <p>Location: {{ lesson.location }}</p>
     <hr />
-    <p>Price: {{ lesson.price }}</p>
+    <p>Price: {{ '£' + lesson.price }}</p>
     <hr />
     <p>Space: {{ lesson.space }}</p>
     <hr />
-    <button @click="lesson.space > 0 ? lesson.space-- : (lesson.space = 0)">
+    <button :disabled="lesson.space == 0" @click="handleAddToCart()">
       Add to Cart
     </button>
   </div>
@@ -21,6 +21,19 @@ export default {
   name: 'LessonCard',
   props: {
     lesson: Object,
+  },
+  data() {
+    return {
+      cart: 0,
+    }
+  },
+  methods: {
+    handleAddToCart() {
+      if (this.lesson.space > 0) {
+        this.lesson.space--
+        this.$emit('shoppingCart')
+      }
+    },
   },
 }
 </script>
@@ -38,11 +51,6 @@ export default {
 .lesson-card:hover {
   transform: scale(1.03);
   box-shadow: 0px 0px 20px #cfcfcfdf;
-}
-
-h4,
-p {
-  font-family: 'Poppins', sans-serif;
 }
 
 h4 {
