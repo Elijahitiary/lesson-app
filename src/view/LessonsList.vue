@@ -1,6 +1,6 @@
 <template>
   <div class="shopping-card-cart">
-    <p>Cart: {{ cart }}</p>
+    <button :disabled="cart.length == 0">Cart: {{ cart.length }}</button>
   </div>
   <!-- SORT -->
   <div class="sort-container">
@@ -43,14 +43,14 @@ export default {
   data() {
     return {
       sortBy: '',
-      cart: 0,
+      cart: [],
       order: '',
       lessons: lesson(),
     }
   },
   methods: {
-    updateShopping() {
-      this.cart++
+    updateShopping(id) {
+      this.cart.push(id)
     },
   },
   computed: {
@@ -80,5 +80,15 @@ export default {
   margin-bottom: 10px;
   margin-left: 45px;
   gap: 20px;
+}
+
+.shopping-card-cart {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.shopping-card-cart button {
+  cursor: pointer;
 }
 </style>
