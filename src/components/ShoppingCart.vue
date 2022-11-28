@@ -18,6 +18,7 @@ export default {
   methods: {
     removeItem() {
       this.$store.state.cart.splice(this.index, 1)
+      this.$store.state.cart.find(x => x.id == this.item.id).space += 1
     },
   },
 }

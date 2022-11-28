@@ -8,9 +8,9 @@
     <hr />
     <p>Price: {{ '£' + lesson.price }}</p>
     <hr />
-    <p>Space: {{ lesson.space }}</p>
+    <p>Space: {{ getLeftSpaces() }}</p>
     <hr />
-    <button :disabled="lesson.space == 0" @click="handleAddToCart()">
+    <button :disabled="getLeftSpaces() == 0" @click="handleAddToCart()">
       Add to Cart
     </button>
   </div>
@@ -23,16 +23,18 @@ export default {
     lesson: Object,
   },
   data() {
-    return {
-      space: 5,
-    }
+    return {}
   },
   methods: {
     handleAddToCart() {
-      if (this.lesson.space > 0) {
-        this.lesson.space--
-        this.$store.commit('ADD_TO_CART', this.lesson)
-      }
+      this.$store.commit('ADD_TO_CART', this.lesson)
+      this.$store.state.cart.find(x => x.id == this.lesson.id).space--
+      this.getLeftSpaces()
+    },
+    getLeftSpaces() {
+      return (
+        this.$store.state.cart.find(x => x.id == this.lesson.id)?.space ?? 5
+      )
     },
   },
 }
