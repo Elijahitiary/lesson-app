@@ -9,6 +9,15 @@
       Cart: {{ this.$store.state.cart.length }}
     </button>
   </div>
+
+  <!-- SEARCH -->
+  <input
+    v-model="search"
+    @keypress="searchOnLessons"
+    class="search"
+    type="text"
+    placeholder="search for lessons"
+  />
   <!-- SORT -->
   <div class="sort-container">
     <p>Sort By</p>
@@ -29,7 +38,11 @@
   </div>
 
   <div class="container-lessons">
-    <LessonCard v-for="lesson in lessons" :key="lesson.id" :lesson="lesson" />
+    <LessonCard
+      v-for="lesson in lessonFilter"
+      :key="lesson.id"
+      :lesson="lesson"
+    />
   </div>
 </template>
 
@@ -44,6 +57,7 @@ export default {
   },
   data() {
     return {
+      search: '',
       sortBy: '',
       order: '',
       lessons: lesson(),
@@ -55,6 +69,14 @@ export default {
     },
   },
   computed: {
+    lessonFilter() {
+      return this.lessons.filter(lesson => {
+        return (
+          lesson.subject.toLowerCase().includes(this.search.toLowerCase()) ||
+          lesson.location.toLowerCase().includes(this.search.toLowerCase())
+        )
+      })
+    },
     sortedLissonsByLowestPrice() {
       return this.lessons.sort((a, b) => a.price - b.price)
     },
@@ -115,5 +137,20 @@ export default {
 .shopping-card-cart .dis:hover {
   transform: translateY(0px);
   box-shadow: 0px 10px 15px rgba(218, 223, 227, 0.4);
+}
+
+.search {
+  width: 90%;
+  margin: 30px 0;
+  padding: 10px 25px;
+  border-radius: 50px;
+  border: lightgray solid 1px;
+  color: rgb(109, 103, 103);
+  box-shadow: 0px 10px 15px rgba(218, 223, 227, 0.4);
+  outline: none;
+}
+
+.search::placeholder {
+  color: lightgray;
 }
 </style>

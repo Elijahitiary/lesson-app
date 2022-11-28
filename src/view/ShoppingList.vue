@@ -1,31 +1,40 @@
 <template>
-  <div class="shopping-card-cart">
-    <button class="card-btn" @click="openLessons">
-      Cart: {{ items.length }}
-    </button>
-  </div>
-  <div class="shopping-list">
-    <ShoppingCart
-      v-for="(item, index) in items"
-      :item="item"
-      :key="index"
-      :index="index"
-    />
-  </div>
-  <p class="total-price">Total Price: £{{ totalPrice }}</p>
+  <div>
+    <div class="shopping-card-cart">
+      <button class="card-btn" @click="openLessons">
+        Cart: {{ items.length }}
+      </button>
+    </div>
+    <div class="shopping-list">
+      <ShoppingCart
+        v-for="(item, index) in items"
+        :item="item"
+        :key="index"
+        :index="index"
+      />
+    </div>
+    <p class="total-price">Total Price: £{{ totalPrice }}</p>
 
-  <div class="user-details">
-    <div class="user-name-container">
-      <p class="user-name">Your Name is: {{ username }}</p>
-      <input v-model="username" placeholder="enter your name" />
-      <p v-if="nameEmpty" class="error">name is required*</p>
+    <div class="user-details">
+      <div class="user-name-container">
+        <p class="user-name">Your Name is: {{ username }}</p>
+        <input v-model="username" placeholder="enter your name" />
+        <p v-if="nameEmpty" class="error">name is required*</p>
+      </div>
+      <div class="user-phone-container">
+        <p class="user-phone">Your Phone is: {{ userphone }}</p>
+        <input v-model="userphone" placeholder="enter your phone" />
+        <p v-if="phoneEmpty" class="error">phone is required*</p>
+      </div>
+      <button @click="checkoutOrder()" class="checkout">checkout</button>
     </div>
-    <div class="user-phone-container">
-      <p class="user-phone">Your Phone is: {{ userphone }}</p>
-      <input v-model="userphone" placeholder="enter your phone" />
-      <p v-if="phoneEmpty" class="error">phone is required*</p>
+    <div v-if="isOpen" class="modal-container">
+      <div class="modal-content-container">
+        <h4>Successful Operation</h4>
+        <p>The order has been submitted successfully</p>
+        <button @click="closeModal">home page</button>
+      </div>
     </div>
-    <button @click="checkoutOrder()" class="checkout">checkout</button>
   </div>
 </template>
 
@@ -38,6 +47,7 @@ export default {
   },
   data() {
     return {
+      isOpen: false,
       username: '',
       userphone: '',
       phoneEmpty: false,
@@ -67,7 +77,7 @@ export default {
 
       if (!this.username.length == 0 && !this.userphone.length == 0) {
         if (name && phone) {
-          alert('YES')
+          this.isOpen = true
         } else {
           if (!name) {
             alert('Name must be letters only')
@@ -76,6 +86,11 @@ export default {
           }
         }
       }
+    },
+    closeModal() {
+      this.isOpen = false
+      this.$router.push({ path: '/' })
+      this.$store.state.cart = []
     },
   },
   computed: {
@@ -188,5 +203,42 @@ export default {
 .error {
   color: #eb5e60;
   font-size: 12px;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background-color: #06131fd7;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal-content-container {
+  background-color: aliceblue;
+  width: 500px;
+  margin: 50px auto;
+}
+
+.modal-content-container h4 {
+  padding-top: 20px;
+  font-size: 32px;
+  margin: 0;
+}
+
+.modal-content-container button {
+  padding: 10px 25px;
+  margin-bottom: 20px;
+  background-color: #0b73da;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.1s ease;
+}
+
+.modal-content-container button:hover {
+  background-color: #0d5aa7;
 }
 </style>
