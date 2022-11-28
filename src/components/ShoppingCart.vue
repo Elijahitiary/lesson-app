@@ -24,12 +24,21 @@ export default {
 </script>
 
 <style scoped>
+.shopping-card-container:first-child {
+  padding-top: 0;
+}
+
+.shopping-card-container:last-child {
+  border-bottom: none;
+}
+
 .shopping-card-container {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 20px 0;
+  border-bottom: #dcdbdb44 solid 1px;
 }
 
 .shopping-card-container img {
@@ -44,5 +53,15 @@ p {
 
 .remove-btn {
   cursor: pointer;
+  border: none;
+  padding: 10px 25px;
+  background-color: #eb5e60;
+  color: white;
+  transition: all 0.1s ease-in-out;
+}
+
+.remove-btn:hover {
+  background-color: #e74042;
+  transform: rotate(3deg);
 }
 </style>

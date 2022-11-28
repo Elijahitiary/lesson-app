@@ -1,8 +1,10 @@
 <template>
   <div class="shopping-card-cart">
     <button
+      class="card-btn"
       @click="openShopping"
       :disabled="this.$store.state.cart.length == 0"
+      :class="{ dis: this.$store.state.cart.length == 0 }"
     >
       Cart: {{ this.$store.state.cart.length }}
     </button>
@@ -85,9 +87,33 @@ export default {
   position: fixed;
   top: 20px;
   right: 20px;
+  z-index: 2;
 }
 
-.shopping-card-cart button {
+.shopping-card-cart .card-btn {
   cursor: pointer;
+  border: none;
+  padding: 10px 25px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(to right, #588de5, #3ac7dd);
+  transition: all 0.2s ease;
+}
+
+.shopping-card-cart .card-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 10px 15px rgba(46, 156, 229, 0.4);
+}
+
+.shopping-card-cart .dis {
+  cursor: not-allowed;
+  background-image: linear-gradient(to right, gray, gray);
+}
+
+.shopping-card-cart .dis:hover {
+  transform: translateY(0px);
+  box-shadow: 0px 10px 15px rgba(218, 223, 227, 0.4);
 }
 </style>

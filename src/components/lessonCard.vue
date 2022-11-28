@@ -84,6 +84,8 @@ button {
   font-family: 'Poppins', sans-serif;
   background-color: #e5e7eb;
   transition: all 0.2s ease;
+  font-weight: bold;
+  border-radius: 3px;
 }
 
 button:hover {
