@@ -77,7 +77,9 @@ export default {
 
       if (!this.username.length == 0 && !this.userphone.length == 0) {
         if (name && phone) {
-          this.isOpen = true
+          this.$store.state.cart.length > 0
+            ? (this.isOpen = true)
+            : alert('shopping cart is empty')
         } else {
           if (!name) {
             alert('Name must be letters only')
@@ -130,7 +132,7 @@ export default {
 
 .shopping-list {
   border: 1px solid rgba(210, 210, 210, 0.575);
-  width: 1000px;
+  max-width: 1000px;
   margin: 0 auto;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
   padding: 30px;

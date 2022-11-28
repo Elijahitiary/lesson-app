@@ -35,7 +35,7 @@ export default {
 
 .shopping-card-container {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;

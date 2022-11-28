@@ -20,21 +20,25 @@
   />
   <!-- SORT -->
   <div class="sort-container">
-    <p>Sort By</p>
-    <select v-model="sortBy">
-      <option value="" selected disabled hidden>Choose here</option>
-      <option>Subject</option>
-      <option>Location</option>
-      <option>Price</option>
-      <option>Availability</option>
-    </select>
-    <p v-if="sortBy">Order</p>
-    <select v-if="sortBy" v-model="order">
-      <option value="" selected disabled hidden>Choose here</option>
-      <option>Ascending</option>
-      <option>Descending</option>
-    </select>
-    <button @click="sortedLessons" v-if="order">sort</button>
+    <div class="sort-option">
+      <p>Sort By</p>
+      <select v-model="sortBy">
+        <option value="" selected disabled hidden>Choose</option>
+        <option>Subject</option>
+        <option>Location</option>
+        <option>Price</option>
+        <option>Availability</option>
+      </select>
+    </div>
+    <div class="sort-option">
+      <p v-if="sortBy">Order</p>
+      <select v-if="sortBy" v-model="order">
+        <option value="" selected disabled hidden>Choose</option>
+        <option>Ascending</option>
+        <option>Descending</option>
+      </select>
+    </div>
+    <button class="sort-btn" @click="sortedLessons" v-if="order">sort</button>
   </div>
 
   <div class="container-lessons">
@@ -149,12 +153,20 @@ export default {
 
 .sort-container {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 10px;
   margin-left: 45px;
   gap: 20px;
+}
+
+.sort-option {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
 }
 
 .shopping-card-cart {
@@ -204,5 +216,32 @@ export default {
 
 .search::placeholder {
   color: lightgray;
+}
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select {
+  border: lightgray solid 1px;
+  outline: none;
+  background-image: url('../assets/caret-down-light.svg');
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) center;
+  padding: 5px 40px;
+  cursor: pointer;
+}
+
+.sort-btn {
+  padding: 5px 25px;
+  cursor: pointer;
+  border: #d3d3d3 solid 1px;
+  transition: all 0.2s ease;
+}
+
+.sort-btn:hover {
+  background-color: #dbdbdb;
 }
 </style>
