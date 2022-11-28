@@ -16,7 +16,7 @@
     @keypress="searchOnLessons"
     class="search"
     type="text"
-    placeholder="search for lessons"
+    placeholder="search for lessons or locations"
   />
   <!-- SORT -->
   <div class="sort-container">
@@ -34,7 +34,7 @@
       <option>Ascending</option>
       <option>Descending</option>
     </select>
-    <button v-if="order">sort</button>
+    <button @click="sortedLessons" v-if="order">sort</button>
   </div>
 
   <div class="container-lessons">
@@ -67,6 +67,64 @@ export default {
     openShopping() {
       this.$router.push({ path: '/Shopping' })
     },
+    sortedLessons() {
+      // Subject
+      this.sortLetters('Subject')
+      // Location
+      this.sortLetters('Location')
+      // Price
+      this.sortNumbers('Price')
+      // Availability space
+      if (this.sortBy == 'Availability') {
+        if (this.order == 'Ascending') {
+          return this.lessons.sort(
+            (a, b) => a.getLeftSpace() - b.getLeftSpace()
+          )
+        } else {
+          return this.lessons.sort(
+            (a, b) => b.getLeftSpace() - a.getLeftSpace()
+          )
+        }
+      }
+    },
+    sortLetters(title) {
+      if (this.sortBy == title) {
+        if (this.order == 'Ascending') {
+          return this.lessons.sort(function (a, b) {
+            if (a[title.toLowerCase()] < b[title.toLowerCase()]) {
+              return -1
+            }
+            if (a[title.toLowerCase()] > b[title.toLowerCase()]) {
+              return 1
+            }
+            return 0
+          })
+        } else {
+          return this.lessons.sort(function (a, b) {
+            if (b[title.toLowerCase()] < a[title.toLowerCase()]) {
+              return -1
+            }
+            if (b[title.toLowerCase()] > a[title.toLowerCase()]) {
+              return 1
+            }
+            return 0
+          })
+        }
+      }
+    },
+    sortNumbers(title) {
+      if (this.sortBy == title) {
+        if (this.order == 'Ascending') {
+          return this.lessons.sort(
+            (a, b) => a[title.toLowerCase()] - b[title.toLowerCase()]
+          )
+        } else {
+          return this.lessons.sort(
+            (a, b) => b[title.toLowerCase()] - a[title.toLowerCase()]
+          )
+        }
+      }
+    },
   },
   computed: {
     lessonFilter() {
@@ -76,12 +134,6 @@ export default {
           lesson.location.toLowerCase().includes(this.search.toLowerCase())
         )
       })
-    },
-    sortedLissonsByLowestPrice() {
-      return this.lessons.sort((a, b) => a.price - b.price)
-    },
-    sortedLissonsByHighestPrice() {
-      return this.lessons.sort((a, b) => b.price - a.price)
     },
   },
 }

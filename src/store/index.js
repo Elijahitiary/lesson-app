@@ -5,6 +5,9 @@ export default createStore({
     cart: [],
   },
   getters: {
+    getTodoById(cart) {
+      return cart
+    }
   },
   mutations: {
     ADD_TO_CART(state, lesson) {
