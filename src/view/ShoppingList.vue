@@ -18,12 +18,14 @@
     <div class="user-name-container">
       <p class="user-name">Your Name is: {{ username }}</p>
       <input v-model="username" placeholder="enter your name" />
+      <p v-if="nameEmpty" class="error">name is required*</p>
     </div>
     <div class="user-phone-container">
       <p class="user-phone">Your Phone is: {{ userphone }}</p>
       <input v-model="userphone" placeholder="enter your phone" />
+      <p v-if="phoneEmpty" class="error">phone is required*</p>
     </div>
-    <button class="checkout">checkout</button>
+    <button @click="checkoutOrder()" class="checkout">checkout</button>
   </div>
 </template>
 
@@ -38,12 +40,42 @@ export default {
     return {
       username: '',
       userphone: '',
+      phoneEmpty: false,
+      nameEmpty: false,
       items: this.$store.state.cart,
     }
   },
   methods: {
     openLessons() {
       this.$router.push({ path: '/' })
+    },
+    checkoutOrder() {
+      var name = /^[a-zA-Z ]+$/.test(this.username)
+      var phone = /^\d*$/.test(this.userphone)
+
+      if (this.username.length == 0) {
+        this.nameEmpty = true
+      } else if (this.username.length != 0) {
+        this.nameEmpty = false
+      }
+
+      if (this.userphone.length == 0) {
+        this.phoneEmpty = true
+      } else if (this.userphone.length != 0) {
+        this.phoneEmpty = false
+      }
+
+      if (!this.username.length == 0 && !this.userphone.length == 0) {
+        if (name && phone) {
+          alert('YES')
+        } else {
+          if (!name) {
+            alert('Name must be letters only')
+          } else {
+            alert('Phone must be numbers')
+          }
+        }
+      }
     },
   },
   computed: {
@@ -144,5 +176,17 @@ export default {
   font-size: 16px;
   border-radius: 5px;
   border: #c5cace5c solid 1px;
+  transition: all 0.2s ease;
+}
+
+.checkout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1px 5px rgba(145, 145, 145, 0.07),
+    0 1px 4px rgba(145, 145, 145, 0.07);
+}
+
+.error {
+  color: #eb5e60;
+  font-size: 12px;
 }
 </style>
